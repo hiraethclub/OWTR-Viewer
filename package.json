@@ -1,0 +1,38 @@
+{
+  "name": "ofcom-spectrum-map",
+  "version": "1.0.0",
+  "description": "Visualise Ofcom Wireless Telegraphy Register data on an interactive map",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --win",
+    "dist": "electron-builder --win"
+  },
+  "author": "Aisling de Grás",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^33.0.0",
+    "electron-builder": "^25.0.0"
+  },
+  "build": {
+    "appId": "club.hiraeth.ofcom-spectrum-map",
+    "productName": "Ofcom Spectrum Map",
+    "win": {
+      "target": "nsis",
+      "icon": "icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    },
+    "files": [
+      "main.js",
+      "renderer.html",
+      "renderer.js",
+      "styles.css",
+      "preload.js",
+      "counties.js",
+      "package.json"
+    ]
+  }
+}

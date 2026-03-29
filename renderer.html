@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ofcom Spectrum Map</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Row 1: Band presets -->
+  <div id="band-presets">
+    <label>Band Presets:</label>
+    <button class="preset-btn" data-min="446.0" data-max="446.2">PMR446</button>
+    <button class="preset-btn" data-min="450" data-max="470">Business UHF</button>
+    <button class="preset-btn" data-min="136" data-max="174">Business VHF</button>
+    <button class="preset-btn" data-min="118" data-max="137">Airband</button>
+    <button class="preset-btn" data-min="156" data-max="174">Marine VHF</button>
+    <button class="preset-btn" data-min="144" data-max="146">Amateur 2m</button>
+    <button class="preset-btn" data-min="430" data-max="440">Amateur 70cm</button>
+  </div>
+
+  <!-- Row 2: Main controls -->
+  <div id="controls">
+    <button id="btn-open" class="secondary">Open CSV</button>
+    <div class="separator"></div>
+
+    <div class="control-group">
+      <label>Freq (MHz):</label>
+      <input type="number" id="freq-min" placeholder="Min" step="any">
+      <span class="dim">–</span>
+      <input type="number" id="freq-max" placeholder="Max" step="any">
+    </div>
+    <div class="separator"></div>
+
+    <div class="control-group">
+      <label>Licensee:</label>
+      <input type="text" id="licensee-filter" placeholder="Search name…">
+    </div>
+    <div class="separator"></div>
+
+    <div class="control-group">
+      <label>County:</label>
+      <select id="county-filter">
+        <option value="">All UK</option>
+      </select>
+    </div>
+    <div class="separator"></div>
+
+    <div class="control-group">
+      <label>Product:</label>
+      <select id="product-filter">
+        <option value="">All Products</option>
+      </select>
+    </div>
+    <div class="separator"></div>
+
+    <div class="control-group" id="status-filter-group" style="display:none">
+      <label>Status:</label>
+      <select id="status-filter">
+        <option value="">All</option>
+        <option value="Live">Live</option>
+        <option value="Surrendered">Surrendered</option>
+        <option value="Revoked">Revoked</option>
+      </select>
+    </div>
+    <div class="separator" id="status-separator" style="display:none"></div>
+
+    <div class="control-group" id="date-filter-group" style="display:none">
+      <label>Issue Date:</label>
+      <input type="date" id="date-from">
+      <span class="dim">–</span>
+      <input type="date" id="date-to">
+    </div>
+  </div>
+
+  <!-- Row 3: Extra filters -->
+  <div id="controls-row2">
+    <div class="control-group">
+      <label>Location:</label>
+      <input type="text" id="location-input" placeholder="Postcode / place…" style="width:140px">
+      <label>Radius (km):</label>
+      <input type="number" id="radius-input" placeholder="km" step="any" style="width:70px">
+      <button id="btn-radius" class="secondary">Apply</button>
+      <button id="btn-radius-clear" class="secondary">Clear</button>
+    </div>
+    <div class="separator"></div>
+
+    <div class="control-group">
+      <label>
+        <input type="checkbox" id="viewport-filter"> Only in view
+      </label>
+    </div>
+    <div class="separator"></div>
+
+    <div class="control-group">
+      <button id="btn-heatmap" class="secondary">Heatmap</button>
+    </div>
+    <div class="separator"></div>
+
+    <button id="btn-filter">Filter</button>
+    <button id="btn-reset" class="secondary">Reset Filters</button>
+    <button id="btn-export" class="secondary">Export CSV</button>
+
+    <span id="status">No file loaded</span>
+  </div>
+
+  <div id="content">
+    <div id="map">
+      <div id="empty-state">
+        <div class="icon">📡</div>
+        <p>Open a CSV file to begin</p>
+        <p style="font-size:12px">File → Open CSV or click "Open CSV"</p>
+      </div>
+    </div>
+    <div id="sidebar">
+      <div id="sidebar-header">Results <span id="result-count"></span></div>
+      <div id="results-container">
+        <table id="results-table">
+          <thead>
+            <tr>
+              <th class="sortable" data-sort="freqMHz">Freq (MHz) <span class="sort-arrow"></span></th>
+              <th class="sortable" data-sort="licensee">Licensee <span class="sort-arrow"></span></th>
+              <th class="sortable" data-sort="product">Product <span class="sort-arrow"></span></th>
+            </tr>
+          </thead>
+          <tbody id="results-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div id="about-overlay">
+    <div id="about-modal">
+      <h2>Ofcom Spectrum Map</h2>
+      <div class="version" id="about-version"></div>
+      <p>Created by: Aisling de Grás</p>
+      <p><a href="#" id="about-link">www.hiraeth.club</a></p>
+      <button id="about-close">Close</button>
+    </div>
+  </div>
+
+  <script src="counties.js"></script>
+  <script src="renderer.js"></script>
+</body>
+</html>
