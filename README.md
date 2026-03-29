@@ -36,6 +36,10 @@ The app expects the standard Ofcom WTR CSV format with columns including:
 - `Longitude(Deg)`
 - `Product Description`
 
+## Where to find Ofcom Wireless Telegraphy Register CSV
+
+https://www.ofcom.org.uk/spectrum/frequencies/spectrum-information-portal
+
 ## License
 
 MIT
