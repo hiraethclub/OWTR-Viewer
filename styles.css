@@ -334,50 +334,6 @@ button.active-toggle {
 .leaflet-popup-content strong { color: #1D9E75; }
 .leaflet-popup-close-button { color: #8a8d96 !important; }
 
-/* ── Cluster icons ────────────────────────────────────────────────── */
-
-.marker-cluster {
-  background-clip: padding-box;
-}
-
-.marker-cluster div {
-  width: 30px;
-  height: 30px;
-  margin-left: 5px;
-  margin-top: 5px;
-  text-align: center;
-  border-radius: 15px;
-  font-size: 12px;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.marker-cluster-small {
-  background: rgba(29, 158, 117, 0.3);
-}
-.marker-cluster-small div {
-  background: rgba(29, 158, 117, 0.7);
-  color: #fff;
-}
-
-.marker-cluster-medium {
-  background: rgba(29, 158, 117, 0.4);
-}
-.marker-cluster-medium div {
-  background: rgba(29, 158, 117, 0.8);
-  color: #fff;
-}
-
-.marker-cluster-large {
-  background: rgba(29, 158, 117, 0.5);
-}
-.marker-cluster-large div {
-  background: rgba(29, 158, 117, 0.9);
-  color: #fff;
-}
-
 /* ── Empty state ──────────────────────────────────────────────────── */
 
 #empty-state {

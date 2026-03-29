@@ -1,5 +1,5 @@
 let map;
-let clusterGroup;
+let markersLayer;
 let heatLayer;
 let radiusCircle;
 let allRecords = [];
@@ -34,21 +34,7 @@ function initMap() {
     maxZoom: 19
   }).addTo(map);
 
-  clusterGroup = L.markerClusterGroup({
-    maxClusterRadius: 50,
-    iconCreateFunction: function (cluster) {
-      const count = cluster.getChildCount();
-      let size = 'small';
-      if (count > 100) size = 'large';
-      else if (count > 10) size = 'medium';
-      return L.divIcon({
-        html: `<div><span>${count}</span></div>`,
-        className: `marker-cluster marker-cluster-${size}`,
-        iconSize: L.point(40, 40)
-      });
-    }
-  });
-  map.addLayer(clusterGroup);
+  markersLayer = L.layerGroup().addTo(map);
 
   map.on('moveend', () => {
     if (document.getElementById('viewport-filter').checked) {
@@ -235,7 +221,7 @@ function applyFilters() {
 // ── Rendering ────────────────────────────────────────────────────────
 
 function renderResults() {
-  clusterGroup.clearLayers();
+  markersLayer.clearLayers();
   if (heatLayer) { map.removeLayer(heatLayer); heatLayer = null; }
   markerRefs = [];
 
@@ -283,7 +269,7 @@ function renderResults() {
         `<em>${r.product || '—'}</em><br>` +
         `<span style="color:#8a8d96">${r.lat.toFixed(5)}, ${r.lng.toFixed(5)}</span>`
       );
-      clusterGroup.addLayer(marker);
+      markersLayer.addLayer(marker);
       markerRefs.push(marker);
     }
   }
