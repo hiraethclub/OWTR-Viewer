@@ -84,8 +84,30 @@ async function openFileDialog() {
   }
 }
 
+async function saveFileDialog(defaultName) {
+  const result = await dialog.showSaveDialog(mainWindow, {
+    title: 'Export Filtered Results',
+    defaultPath: defaultName,
+    filters: [
+      { name: 'CSV Files', extensions: ['csv'] },
+      { name: 'All Files', extensions: ['*'] }
+    ]
+  });
+  return result;
+}
+
 ipcMain.handle('open-file-dialog', async () => {
   await openFileDialog();
+});
+
+ipcMain.handle('save-file-dialog', async (event, defaultName) => {
+  const result = await saveFileDialog(defaultName);
+  return result;
+});
+
+ipcMain.handle('write-file', async (event, filePath, content) => {
+  fs.writeFileSync(filePath, content, 'utf8');
+  return true;
 });
 
 ipcMain.handle('get-version', () => {
