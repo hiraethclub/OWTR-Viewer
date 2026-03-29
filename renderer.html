@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ofcom Spectrum Map</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="controls">
+    <button id="btn-open" class="secondary">Open CSV</button>
+    <div class="separator"></div>
+    <div class="control-group">
+      <label>Freq (MHz):</label>
+      <input type="number" id="freq-min" placeholder="Min" step="any">
+      <span style="color:#8a8d96">–</span>
+      <input type="number" id="freq-max" placeholder="Max" step="any">
+    </div>
+    <div class="separator"></div>
+    <div class="control-group">
+      <label>Licensee:</label>
+      <input type="text" id="licensee-filter" placeholder="Search name…">
+    </div>
+    <div class="separator"></div>
+    <button id="btn-filter">Filter</button>
+    <button id="btn-clear" class="secondary">Clear</button>
+    <span id="status">No file loaded</span>
+  </div>
+
+  <div id="content">
+    <div id="map">
+      <div id="empty-state">
+        <div class="icon">📡</div>
+        <p>Open a CSV file to begin</p>
+        <p style="font-size:12px">File → Open CSV or click "Open CSV"</p>
+      </div>
+    </div>
+    <div id="sidebar">
+      <div id="sidebar-header">Results <span id="result-count"></span></div>
+      <div id="results-container">
+        <table id="results-table">
+          <thead>
+            <tr>
+              <th>Freq (MHz)</th>
+              <th>Licensee</th>
+              <th>Product</th>
+            </tr>
+          </thead>
+          <tbody id="results-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div id="about-overlay">
+    <div id="about-modal">
+      <h2>Ofcom Spectrum Map</h2>
+      <div class="version" id="about-version"></div>
+      <p>Created by: Aisling de Grás</p>
+      <p><a href="#" id="about-link">www.hiraeth.club</a></p>
+      <button id="about-close">Close</button>
+    </div>
+  </div>
+
+  <script src="renderer.js"></script>
+</body>
+</html>
